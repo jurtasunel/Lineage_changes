@@ -1,0 +1,13 @@
+CREATE TABLE Pango_Lineages (
+ID int UNSIGNED NOT NULL AUTO_INCREMENT,
+sequence text,
+last_lineage varchar(32),
+new_lineage varchar(32),
+GSAID_ID varchar(16),
+GSAID_colldate date,
+GSAID_subdate date,
+submitting_lab varchar(128),
+PRIMARY KEY (ID)
+);
+
+
