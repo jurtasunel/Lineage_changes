@@ -15,8 +15,8 @@ library(gmailr) # Documetation: https://gmailr.r-lib.org/
 
 ### VARIABLES.
 # Define constants for log into MySQL and access the Pango_Lineages database.
-USER <- "NVRL"
-PSW <- "Abm@Hs4#6xj3"
+USER <- "XXXx"
+PSW <- "XXXX"
 DB_NAME <- "Pango_Lineages"
 HOST <- "localhost"
 # Define global variable for MySQL connection.
