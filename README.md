@@ -1,4 +1,4 @@
-# This set of scripts produces a csv report named "Lineage_change_DATE.csv" with the lineages that have canged on the last update of pangolin.
+# This set of scripts produces a csv report named "Lineage_change_DATE.csv" with the lineages that have changed on the last update of pangolin.
 
 - Pango_Lineages.sh is the parent script to run. It calls pangolin_update.sh to update pangolinf first, then initializes conda and finally calls Pango_Lineages.R to do the rest of the analysis. It then finishes moving the resulting report "Lineage_change_DATE.csv" to a Reports folder.
 
