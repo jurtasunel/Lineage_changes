@@ -121,7 +121,20 @@ fill_newlin()
 print("Generating lineage change report and updating old lineage.")
 lin_report <- report_lin()
 db_disconnect()
-colnames(lin_report) <- c("GSAID_ID", "previous_lineage", "updated_lineage", "submittng_lab")
+colnames(lin_report) <- c("GSAID_ID", "previous_lineage", "updated_lineage", "submitting_lab")
+
+# Initialize vectors to store the originating lab.
+originating_lab <- c()
+#Loop through the report rows.
+for (i in 1:nrow(lin_report)){
+  # Get the current GSAID_ID.
+  current_ID <- lin_report$GSAID_ID[i]
+  # Get the originating lab.
+  originating_lab <- c(originating_lab, sublab_file[sublab_file$gisaid_epi_isl == current_ID, "originating_lab"])
+}
+# Bind the originating lab vector to the lineage report data frame.
+lin_report <- cbind(lin_report, originating_lab)
+
 # Write the final csv report with the lineage changes.
 write.csv(lin_report, paste0("Lineage_change_", Sys.Date(), ".csv"), row.names = FALSE)
 
@@ -130,7 +143,7 @@ gm_auth_configure(path = "/home/gabriel/Desktop/Jose/NVRL_documents/GmailReporti
 
 # Create test email
 test_email <- gm_mime() %>%
-  gm_to("jose.urtasunelizari@ucd.ie") %>%
+  gm_to("jose.urtasunelizari@ucd.ie, nicola.mellotte@hpsc.ie, aislingrichmond@beaumont.ie, Wendy.Brennan@hse.ie, joannem.king@hse.ie, Aoife.Warde@hse.ie, PGRIER@stjames.ie, jonathan.dean@ucd.ie, eric.brown@ucdconnect.ie, Laura.MurilloRuiz@hse.ie, catherine.dempsey@hse.ie, sarah.mcgarry@hpsc.ie, carina.brehony@hpsc.ie, niamh.murphy@hpsc.ie, Celine.Higgins@hse.ie, Adele.Habington@olchc.ie, Karen.johnston@olchc.ie, soracha.mckinley@hpsc.ie, daniel.hare@ucd.ie, Patrick.Stapleton@hse.ie, gabo.gonzalez@ucd.ie") %>%
   gm_from("jose.urtasunelizari.reporting@gmail.com") %>%
   gm_subject(paste0("Pangolin ", pangolin_version, " Lineage update")) %>%
   gm_text_body("Hi,
@@ -147,8 +160,7 @@ Josemari") %>%
 # Send the email.
 gm_send_message(test_email)
 
-  
-
+#mailing_list = "nicola.mellotte@hpsc.ie, aislingrichmond@beaumont.ie, Wendy.Brennan@hse.ie, joannem.king@hse.ie, Aoife.Warde@hse.ie, PGRIER@stjames.ie, jonathan.dean@ucd.ie, eric.brown@ucdconnect.ie, Laura.MurilloRuiz@hse.ie, catherine.dempsey@hse.ie, sarah.mcgarry@hpsc.ie, carina.brehony@hpsc.ie, niamh.murphy@hpsc.ie, Celine.Higgins@hse.ie, Adele.Habington@olchc.ie, Karen.johnston@olchc.ie, soracha.mckinley@hpsc.ie, daniel.hare@ucd.ie, Patrick.Stapleton@hse.ie, gabo.gonzalez@ucd.ie"  
 
 
 
